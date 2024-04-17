@@ -1,0 +1,765 @@
+{% extends "base.html" %} {% block content %}
+<header class="navbar-light navbar-sticky">
+	<!-- Logo Nav START -->
+	<nav class="navbar navbar-expand-xl">
+	  <div class="container">
+		<!-- Logo START -->
+		<a class="navbar-brand" href="/">
+		  <img
+			class="light-mode-item navbar-brand-item"
+			src="https://eduport.webestica.com/assets/images/logo.svg"
+			alt="logo"
+		  />
+		  <img
+			class="dark-mode-item navbar-brand-item"
+			src="https://eduport.webestica.com/assets/images/logo-light.svg"
+			alt="logo"
+		  />
+		</a>
+		<!-- Logo END -->
+  
+		<!-- Responsive navbar toggler -->
+		<button
+		  class="navbar-toggler ms-auto"
+		  type="button"
+		  data-bs-toggle="collapse"
+		  data-bs-target="#navbarCollapse"
+		  aria-controls="navbarCollapse"
+		  aria-expanded="true"
+		  aria-label="Toggle navigation"
+		>
+		  <span class="me-2"><i class="fas fa-search fs-5"></i></span>
+		</button>
+  
+		<!-- Category menu START -->
+		<ul class="navbar-nav navbar-nav-scroll dropdown-clickable">
+		  <li class="nav-item dropdown dropdown-menu-shadow-stacked">
+			<a
+			  class="nav-link"
+			  href="#"
+			  id="categoryMenu"
+			  data-bs-toggle="dropdown"
+			  aria-haspopup="true"
+			  aria-expanded="false"
+			>
+			  {% comment %} <i class="bi bi-grid-3x3-gap-fill me-3 fs-5 me-xl-1 d-xl-none"></i>
+			  <i
+				class="bi bi-grid-3x3-gap-fill me-1 d-none d-xl-inline-block"
+			  ></i> {% endcomment %}
+			  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid-3x3-gap-fill me-1 d-none d-xl-inline-block" viewBox="0 0 16 16">
+				<path d="M1 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zM1 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zM1 12a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1z"/>
+			  </svg>
+			  <span class="d-none d-xl-inline-block">{{ category }}</span>
+			</a>
+  
+			<ul
+			  class="dropdown-menu z-index-unset"
+			  aria-labelledby="categoryMenu"
+			>
+			  {% for part in parts %}
+			  <li><a class="dropdown-item" href="{{ part.get_absolute_url }}">{{ part.name }}</a></li>
+			  {% endfor %}
+			  <li><hr class="dropdown-divider" /></li>
+			  <li>
+				<a
+				  class="dropdown-item bg-primary text-primary bg-opacity-10 rounded-2 mb-0"
+				  href="parts/"
+				  >{{ viewa }}</a
+				>
+			  </li>
+			</ul>
+		  </li>
+		</ul>
+		<!-- Category menu END -->
+  
+		<!-- Main navbar START -->
+		<div class="navbar-collapse collapse" id="navbarCollapse">
+		  <!-- Nav Search START -->
+		  <div class="col-xl-8">
+			<div class="nav my-3 my-xl-0 px-4 flex-nowrap align-items-center">
+			  <div class="nav-item w-100">
+				<form class="rounded position-relative" method="get" action="/full_search/">
+				  <input
+					class="form-control pe-5 bg-secondary bg-opacity-10 border-0"
+					type="search"
+					name="quer"
+					placeholder="{{ search }}"
+					aria-label="Search"
+				  />
+				  <button
+					class="btn btn-link bg-transparent px-2 py-0 position-absolute top-50 end-0 translate-middle-y"
+					type="submit"
+				  >
+					<i class="fas fa-search fs-6 text-primary"></i>
+				  </button>
+				</form>
+			  </div>
+			</div>
+		  </div>
+		  <!-- Nav Search END -->
+		</div>
+		<!-- Main navbar END -->
+  
+		<!-- Right header content START -->
+		<!-- Add to cart -->
+		<div class="navbar-nav position-relative overflow-visible me-3">
+		  <a href="#" class="nav-link">
+			<i class="fas fa-shopping-cart fs-5"></i
+		  ></a>
+		  <span
+			class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-success mt-xl-2 ms-n1"
+			>5
+			<span class="visually-hidden">unread messages</span>
+		  </span>
+		</div>
+  
+		<!-- Language -->
+		<ul class="navbar-nav navbar-nav-scroll me-3 d-none d-xl-block">
+		  <li class="nav-item dropdown">
+			<a
+			  class="nav-link dropdown-toggle"
+			  href="#"
+			  id="language"
+			  data-bs-toggle="dropdown"
+			  aria-haspopup="true"
+			  aria-expanded="false"
+			>
+			  <i class="fas fa-globe me-2"></i>
+			  <span class="d-none d-lg-inline-block">{{ language }}</span>
+			</a>
+			<ul
+			  class="dropdown-menu dropdown-menu-end min-w-auto"
+			  aria-labelledby="language"
+			>
+			  <li>
+				<a class="dropdown-item" href="/en/"
+				  ><img
+					class="fa-fw me-2"
+					src="https://m.sprashivalka.com/user_media/1ac/c41/2f3/b9640.jpg"
+					alt=""
+				  />English</a
+				>
+			  </li>
+			  <li>
+				<a class="dropdown-item" href="/uz/"
+				  ><img
+					class="fa-fw me-2"
+					src="https://savol-javoblar.darakchi.net/uploads/posts/2023-11/ozbekiston-bayrogi-bolalar-uchun-sher-1.jpg"
+					alt=""
+				  />O'zbek</a
+				>
+			  </li>
+			  <li>
+				<a class="dropdown-item" href="/ru/"
+				  ><img
+					class="fa-fw me-2"
+					src="https://ggym.ru/wp-content/uploads/2021/10/flag-russia-XL.jpg"
+					alt=""
+				  />Русский</a
+				>
+			  </li>
+			</ul>
+		  </li>
+		</ul>
+  
+		<!-- Signout button  -->
+		{% if request.user.is_authenticated %}
+		<div class="dropdown ms-1 ms-lg-0">
+		  <a
+			class="avatar avatar-sm p-0"
+			href="#"
+			id="profileDropdown"
+			role="button"
+			data-bs-auto-close="outside"
+			data-bs-display="static"
+			data-bs-toggle="dropdown"
+			aria-expanded="false"
+		  > 
+			{% if request.user.avatar %}
+			<img
+			  class="avatar-img rounded-circle"
+			  src="{{request.user.avatar.url}}"
+			  alt="avatar"
+			/>
+			{% else %}
+			<img
+			  class="avatar-img rounded-circle"
+			  src="https://www.imagensempng.com.br/wp-content/uploads/2021/08/Icone-usuario-Png.png"
+			  alt="avatar"
+			/>
+			{% endif %}
+		  </a>
+		  <ul
+			class="dropdown-menu dropdown-animation dropdown-menu-end shadow pt-3"
+			aria-labelledby="profileDropdown"
+		  >
+			<!-- Profile info -->
+			<li class="px-3 mb-3">
+			  <div class="d-flex align-items-center">
+				<!-- Avatar -->
+				<div class="avatar me-3">
+				  {% if request.user.avatar %}
+				  <img
+					class="avatar-img rounded-circle shadow"
+					src="{{request.user.avatar.url}}"
+					alt="avatar"
+				  />
+				  {% else %}
+				  <img
+					class="avatar-img rounded-circle shadow"
+					src="https://www.imagensempng.com.br/wp-content/uploads/2021/08/Icone-usuario-Png.png"
+					alt="avatar"
+				  />
+				  {% endif %}
+				</div>
+				<div>
+				  <a class="h6" href="{% url "account" request.user.id %}">{{request.user.username}}</a>
+				  <p class="small m-0">{{request.user.email}}</p>
+				</div>
+			  </div>
+			</li>
+			<li><hr class="dropdown-divider" /></li>
+			<!-- Links -->
+			<li>
+			  <a class="dropdown-item" href="{% url "updateUser" request.user.pk %}"
+				><i class="bi bi-person fa-fw me-2"></i>{{ edit }}</a
+			  >
+			</li>
+			<li>
+			  <a class="dropdown-item" href="#"
+				><i class="bi bi-gear fa-fw me-2"></i>{{ set }}</a
+			  >
+			</li>
+			<li>
+			  <a class="dropdown-item" href="#"
+				><i class="bi bi-info-circle fa-fw me-2"></i>{{ help }}</a
+			  >
+			</li>
+			<li>
+			  <a class="dropdown-item bg-danger-soft-hover" href="logout/"
+				><i class="bi bi-power fa-fw me-2"></i>{{ sign_out }}</a
+			  >
+			</li>
+			<li><hr class="dropdown-divider" /></li>
+			<!-- Dark mode options START -->
+			<li>
+			  <div
+				class="bg-light dark-mode-switch theme-icon-active d-flex align-items-center p-1 rounded mt-2"
+			  >
+				<button
+				  type="button"
+				  class="btn btn-sm mb-0"
+				  data-bs-theme-value="light"
+				>
+				  <svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					fill="currentColor"
+					class="bi bi-sun fa-fw mode-switch"
+					viewBox="0 0 16 16"
+				  >
+					<path
+					  d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"
+					/>
+					<use href="#"></use>
+				  </svg>
+				  {{ light }}
+				</button>
+				<button
+				  type="button"
+				  class="btn btn-sm mb-0"
+				  data-bs-theme-value="dark"
+				>
+				  <svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					fill="currentColor"
+					class="bi bi-moon-stars fa-fw mode-switch"
+					viewBox="0 0 16 16"
+				  >
+					<path
+					  d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM4.858 1.311A7.269 7.269 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.316 7.316 0 0 0 5.205-2.162c-.337.042-.68.063-1.029.063-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286z"
+					/>
+					<path
+					  d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"
+					/>
+					<use href="#"></use>
+				  </svg>
+				  {{ dark }}
+				</button>
+				<button
+				  type="button"
+				  class="btn btn-sm mb-0 active"
+				  data-bs-theme-value="auto"
+				>
+				  <svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="16"
+					height="16"
+					fill="currentColor"
+					class="bi bi-circle-half fa-fw mode-switch"
+					viewBox="0 0 16 16"
+				  >
+					<path
+					  d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"
+					/>
+					<use href="#"></use>
+				  </svg>
+				  {{ auto }}
+				</button>
+			  </div>
+			</li>
+			<!-- Dark mode options END-->
+		  </ul>
+		</div>
+		{% else %}
+		<div class="navbar-nav d-none d-lg-inline-block">
+		  <a href="register/">
+			<button class="btn btn-danger-soft mb-0">
+			  <i class="fas fa-sign-in-alt me-2"></i>Sign Up
+			</button>
+		  </a>
+		</div>
+		{% endif %}
+		<!-- Right header content END -->
+	  </div>
+	</nav>
+	<!-- Logo Nav END -->
+  </header>
+
+<main>
+<section class="py-0 bg-blue h-100px align-items-center d-flex h-200px rounded-0" style="background:url(assets/images/pattern/04.png) no-repeat center center; background-size:cover;">
+	<!-- Main banner background image -->
+	<div class="container">
+		<div class="row">
+			<div class="col-12 text-center">
+				<!-- Title -->
+				<h1 class="text-white">Submit a new Course</h1>
+				<p class="text-white mb-0">Read our <a href="#" class="text-white"><u>"Before you create a course"</u></a> article before submitting!</p>	
+			</div>
+		</div>
+	</div>
+</section>
+<section>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 mx-auto text-center">
+				<!-- Content -->
+				<p class="text-center">Use this interface to add a new Course to the portal. Once you are done adding the item it will be reviewed for quality. If approved, your course will appear for sale and you will be informed by email that your course has been accepted.</p>
+			</div>
+		</div>
+
+		<div class="card bg-transparent border rounded-3 mb-5">
+			<div id="stepper" class="bs-stepper stepper-outline">
+				<!-- Card header -->
+				<div class="card-header bg-light border-bottom px-lg-5">
+					<!-- Step Buttons START -->
+					<div class="bs-stepper-header" role="tablist">
+						<!-- Step 1 -->
+						<div class="step" data-target="#step-1">
+							<div class="d-grid text-center align-items-center">
+								<button type="button" class="btn btn-link step-trigger mb-0" role="tab" id="steppertrigger1" aria-controls="step-1">
+									<span class="bs-stepper-circle">1</span>
+								</button>
+								<h6 class="bs-stepper-label d-none d-md-block">Course details</h6>
+							</div>
+						</div>
+						<div class="line"></div>
+
+						<!-- Step 2 -->
+						<div class="step" data-target="#step-2">
+							<div class="d-grid text-center align-items-center">
+								<button type="button" class="btn btn-link step-trigger mb-0" role="tab" id="steppertrigger2" aria-controls="step-2">
+									<span class="bs-stepper-circle">2</span>
+								</button>
+								<h6 class="bs-stepper-label d-none d-md-block">Course media</h6>
+							</div>
+						</div>
+						<div class="line"></div>
+
+						<!-- Step 3 -->
+						<div class="step" data-target="#step-3">
+							<div class="d-grid text-center align-items-center">
+								<button type="button" class="btn btn-link step-trigger mb-0" role="tab" id="steppertrigger3" aria-controls="step-3">
+									<span class="bs-stepper-circle">3</span>
+								</button>
+								<h6 class="bs-stepper-label d-none d-md-block">Curriculum</h6>
+							</div>
+						</div>
+						<div class="line"></div>
+
+						<!-- Step 4 -->
+						<div class="step" data-target="#step-4">
+							<div class="d-grid text-center align-items-center">
+								<button type="button" class="btn btn-link step-trigger mb-0" role="tab" id="steppertrigger4" aria-controls="step-4">
+									<span class="bs-stepper-circle">4</span>
+								</button>
+								<h6 class="bs-stepper-label d-none d-md-block">Additional information</h6>
+							</div>
+						</div>
+					</div>
+					<!-- Step Buttons END -->
+				</div>
+
+				<!-- Card body START -->
+				<div class="card-body">
+					<!-- Step content START -->
+					<div class="bs-stepper-content">
+						<form method="post" enctype="multipart/form-data">
+							<div id="step-1" role="tabpanel" class="content fade" aria-labelledby="steppertrigger1">
+								<h4>Course details</h4>
+								<hr> 
+								<div class="row g-4">
+									<!-- Course title -->
+									<div class="col-12">
+										<label class="form-label">Course title</label>
+										{% csrf_token %}
+										{{ form.name }}
+									</div>
+									<div class="col-md-6">
+										<label class="form-label">Course category</label>
+										{% csrf_token %}
+										{{ form.part }}
+									</div>
+
+									<!-- Course level -->
+									<div class="col-md-6">
+										<label class="form-label">Course level</label>
+										<select class="form-select js-choice border-0 z-index-9 bg-transparent" aria-label=".form-select-sm" data-search-enabled="false" data-remove-item-button="true">
+											<option value="">Select course level</option>
+											<option>All level</option>
+											<option>Beginner</option>
+											<option>Intermediate</option>
+											<option>Advance</option>
+										</select>
+									</div>
+
+									<!-- Language -->
+									<div class="col-md-6">
+										<label class="form-label">Language</label>
+										<select class="form-select js-choice border-0 z-index-9 bg-transparent" multiple="multiple" aria-label=".form-select-sm" data-max-item-count="3" data-remove-item-button="true">
+											<option value="">Select language</option>
+											<option>English</option>
+											<option>German</option>
+											<option>French</option>
+											<option>Hindi</option>
+										</select>
+									</div>
+
+									<!-- Switch -->
+									<div class="col-md-6 d-flex align-items-center justify-content-start mt-5">
+										<div class="form-check form-switch form-check-md">
+											<input class="form-check-input" type="checkbox" id="checkPrivacy1">
+											<label class="form-check-label" for="checkPrivacy1">Check this for featured course</label>
+										</div>
+									</div>
+
+									<!-- Course time -->
+									<div class="col-md-6">
+										<label class="form-label">Course time</label>
+										<input class="form-control" type="text" placeholder="Enter course time">
+									</div>
+
+									<!-- Total lecture -->
+									<div class="col-md-6">
+										<label class="form-label">Total lecture</label>
+										<input class="form-control" type="text" placeholder="Enter total lecture">
+									</div>
+
+									<!-- Course price -->
+									<div class="col-md-6">
+										<label class="form-label">Course price</label>
+										{% csrf_token %}
+										{{ form.price }}
+									</div>
+
+									<!-- Course discount -->
+									<div class="col-md-6">
+										<label class="form-label">Discount price</label>
+										<input class="form-control" type="text" placeholder="Enter discount">
+										<div class="col-12 mt-1 mb-0">
+											<div class="form-check small mb-0">
+												<input class="form-check-input" type="checkbox" id="checkBox1">
+												<label class="form-check-label" for="checkBox1">
+													Enable this Discount
+												</label>
+											</div>
+										</div>
+									</div>
+									
+									<!-- Course description -->
+									<div class="col-12">
+										<label class="form-label">Add description</label>
+										{% csrf_token %}
+										{{ form.body }}
+									</div>	
+
+									<!-- Step 1 button -->
+									<div class="d-flex justify-content-end mt-3">
+										<button class="btn btn-primary next-btn mb-0">Next</button>
+									</div>
+								</div>
+								<!-- Basic information START -->
+							</div>
+							<!-- Step 1 content END -->
+
+							<!-- Step 2 content START -->
+							<div id="step-2" role="tabpanel" class="content fade" aria-labelledby="steppertrigger2">
+								<!-- Title -->
+								<h4>Course media</h4>
+
+								<hr> <!-- Divider -->
+
+								<div class="row">
+									<!-- Upload image START -->
+									<div class="col-12">
+										<div class="text-center justify-content-center align-items-center p-4 p-sm-5 border border-2 border-dashed position-relative rounded-3">
+											<!-- Image -->
+											<img src="assets/images/element/gallery.svg" class="h-50px" alt="">
+												
+											{% csrf_token %}
+											{{ form.image }}
+										</div>
+
+										<!-- Button -->
+										<div class="d-sm-flex justify-content-end mt-2">
+											<button type="button" class="btn btn-sm btn-danger-soft mb-3">Remove image</button>
+										</div>
+									</div>
+									<!-- Upload image END -->
+
+									<!-- Upload video START -->
+									<div class="col-12">
+										<h5>Upload video</h5>
+										{% csrf_token %}
+										{{ video_form.as_p }}
+									</div>
+									<!-- Upload video END -->
+
+									<!-- Step 2 button -->
+									<div class="d-flex justify-content-between mt-3">
+										<button class="btn btn-secondary prev-btn mb-0">Previous</button>
+										<button class="btn btn-primary next-btn mb-0">Next</button>
+									</div>
+								</div>
+							</div>
+							<!-- Step 2 content END -->
+
+							<!-- Step 3 content START -->
+							<div id="step-3" role="tabpanel" class="content fade" aria-labelledby="steppertrigger3">
+								<!-- Title -->
+								<h4>Curriculum</h4>
+
+								<hr> <!-- Divider -->
+
+								<div class="row">
+									<!-- Add lecture Modal button -->
+									<div class="d-sm-flex justify-content-sm-between align-items-center mb-3">
+										<h5 class="mb-2 mb-sm-0">Upload Lecture</h5>
+										<a href="#" class="btn btn-sm btn-primary-soft mb-0" data-bs-toggle="modal" data-bs-target="#addLecture"><i class="bi bi-plus-circle me-2"></i>Add Lecture</a>
+									</div>
+			
+									<!-- Edit lecture START -->
+									<div class="accordion accordion-icon accordion-bg-light" id="accordionExample2">
+										
+										<!-- Item END -->
+			
+									</div>
+									<!-- Edit lecture END -->
+
+									<!-- Step 3 button -->
+									<div class="d-flex justify-content-between">
+										<button class="btn btn-secondary prev-btn mb-0">Previous</button>
+										<button class="btn btn-primary next-btn mb-0">Next</button>
+									</div>
+								</div>
+							</div>
+							<!-- Step 3 content END -->
+
+							<!-- Step 4 content START -->
+							<div id="step-4" role="tabpanel" class="content fade" aria-labelledby="steppertrigger4">
+								<!-- Title -->
+								<h4>Additional information</h4>
+
+								<hr> <!-- Divider -->
+
+								<div class="row g-4">
+									<!-- Edit faq END -->
+
+									<!-- Tags START -->
+									<div class="col-12">
+										<div class="bg-light border rounded p-4">
+											<h5 class="mb-0">Tags</h5>
+											<!-- Comment -->
+											<div class="mt-3">
+												<input type="text" class="form-control js-choice mb-0" data-placeholder="true" data-placeholder-Val="Enter tags" data-max-item-count="14" data-remove-item-button="true">
+												<span class="small">Maximum of 14 keywords. Keywords should all be in lowercase. e.g. javascript, react, marketing</span>
+											</div>
+										</div>
+									</div>
+									<!-- Tags START -->
+
+									<!-- Reviewer START -->
+									<div class="col-12">
+										<div class="bg-light border rounded p-4">
+											<h5 class="mb-0">Message to a reviewer</h5>
+
+											<!-- Comment -->
+											<div class="mt-3">
+												<textarea class="form-control" rows="4" placeholder="Write a message" spellcheck="false"></textarea>
+												<div class="form-check mb-0 mt-2">
+													<input type="checkbox" class="form-check-input" id="exampleCheck1">
+													<label class="form-check-label" for="exampleCheck1">
+														Any images, sounds, or other assets that are not my own work, have been appropriately licensed for use in the file preview or main course. Other than these items, this work is entirely my own and I have full rights to sell it here.
+													</label>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- Reviewer START -->
+
+									<!-- Step 4 button -->
+									<div class="d-md-flex justify-content-between align-items-start mt-4">
+										<button class="btn btn-secondary prev-btn mb-2 mb-md-0">Previous</button>
+										<button class="btn btn-light me-auto ms-md-2 mb-2 mb-md-0">Preview Course</button>
+										<div class="text-md-end">
+											<a href="course-added.html" class="btn btn-success mb-2 mb-sm-0">Submit a Course</a>
+											<p class="mb-0 small mt-1">Once you click "Submit a Course", your course will be uploaded and marked as pending for review.</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Step 4 content END -->
+
+						</form>
+					</div>
+				</div>
+				<!-- Card body END -->
+			</div>
+		</div>
+	</div>
+</section>
+
+</main>
+<footer class="bg-dark p-3">
+	<div class="container">
+		<div class="row align-items-center">
+			<!-- Widget -->
+			<div class="col-md-4 text-center text-md-start mb-3 mb-md-0">
+				<!-- Logo START -->
+				<a href="index.html"> <img class="h-20px" src="assets/images/logo-light.svg" alt="logo"> </a>
+			</div>
+			<!-- Widget -->
+			<div class="col-md-4">
+				<!-- Rating -->
+				<ul class="list-inline mb-0 text-center text-md-end">
+					<li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-facebook"></i></a></li>
+					<li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-instagram"></i></a></li>
+					<li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-linkedin-in"></i></a></li>
+					<li class="list-inline-item ms-2"><a href="#"><i class="text-white fab fa-twitter"></i></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</footer>
+<form method="post" enctype="multipart/form-data">
+	<div class="modal fade" id="addLecture" tabindex="-1" aria-labelledby="addLectureLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header bg-dark">
+			<h5 class="modal-title text-white" id="addLectureLabel">Add Lecture</h5>
+			<button type="button" class="btn btn-sm btn-light mb-0" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+		  </div>
+		  <div class="modal-body">
+			<div class="row text-start g-3">
+						<!-- Course name -->
+						<div class="col-12">
+							<label class="form-label">Course name <span class="text-danger">*</span></label>
+							{% csrf_token %}
+							{{ lecture_form.as_p }}
+						</div>
+					</div>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-danger-soft my-0" data-bs-dismiss="modal">Close</button>
+			<button type="submit" class="btn btn-success my-0" name="lecture_submit">Save Lecture</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+</form>
+<div class="modal fade" id="addTopic" tabindex="-1" aria-labelledby="addTopicLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-dark">
+        <h5 class="modal-title text-white" id="addTopicLabel">Add topic</h5>
+        <button type="button" class="btn btn-sm btn-light mb-0" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="row text-start g-3">
+					<!-- Topic name -->
+					<div class="col-md-6">
+						<label class="form-label">Topic name</label>
+						<input class="form-control" type="text" placeholder="Enter topic name">
+					</div>
+					<!-- Video link -->
+					<div class="col-md-6">
+						<label class="form-label">Video link</label>
+						<input class="form-control" type="text" placeholder="Enter Video link">
+					</div>
+					<!-- Description -->
+					<div class="col-12 mt-3">
+						<label class="form-label">Course description</label>
+						<textarea class="form-control" rows="4" placeholder="" spellcheck="false"></textarea>
+					</div>
+					<!-- Buttons -->
+					<div class="col-6 mt-3">
+						<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+							<!-- Free button -->
+							<input type="radio" class="btn-check" name="options" id="option1" checked="">
+							<label class="btn btn-sm btn-light btn-primary-soft-check border-0 m-0" for="option1">Free</label>
+							<!-- Premium button -->
+							<input type="radio" class="btn-check" name="options" id="option2">
+							<label class="btn btn-sm btn-light btn-primary-soft-check border-0 m-0" for="option2">Premium</label>
+						</div>
+					</div>
+				</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger-soft my-0" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success my-0">Save topic</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="addQuestion" tabindex="-1" aria-labelledby="addQuestionLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-dark">
+        <h5 class="modal-title text-white" id="addQuestionLabel">Add FAQ</h5>
+        <button type="button" class="btn btn-sm btn-light mb-0" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="row text-start g-3">
+					<!-- Question -->
+					<div class="col-12">
+						<label class="form-label">Question</label>
+						<input class="form-control" type="text" placeholder="Write a question">
+					</div>
+					<!-- Answer -->
+					<div class="col-12 mt-3">
+						<label class="form-label">Answer</label>
+						<textarea class="form-control" rows="4" placeholder="Write a answer" spellcheck="false"></textarea>
+					</div>
+				</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger-soft my-0" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success my-0">Save topic</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

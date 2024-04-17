@@ -1,0 +1,651 @@
+{% extends "base.html" %} {% block content %}
+<header class="navbar-light navbar-stickyf">
+    <!-- Logo Nav START -->
+    <nav class="navbar navbar-expand-xl">
+      <div class="container">
+        <!-- Logo START -->
+        <a class="navbar-brand" href="/">
+          <img
+            class="light-mode-item navbar-brand-item"
+            src="https://eduport.webestica.com/assets/images/logo.svg"
+            alt="logo"
+          />
+          <img
+            class="dark-mode-item navbar-brand-item"
+            src="https://eduport.webestica.com/assets/images/logo-light.svg"
+            alt="logo"
+          />
+        </a>
+        <!-- Logo END -->
+  
+        <!-- Responsive navbar toggler -->
+        <button
+          class="navbar-toggler ms-auto"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarCollapse"
+          aria-controls="navbarCollapse"
+          aria-expanded="true"
+          aria-label="Toggle navigation"
+        >
+          <span class="me-2"><i class="fas fa-search fs-5"></i></span>
+        </button>
+  
+        <!-- Category menu START -->
+        <ul class="navbar-nav navbar-nav-scroll dropdown-clickable">
+          <li class="nav-item dropdown dropdown-menu-shadow-stacked">
+            <a
+              class="nav-link"
+              href="#"
+              id="categoryMenu"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              {% comment %} <i class="bi bi-grid-3x3-gap-fill me-3 fs-5 me-xl-1 d-xl-none"></i>
+              <i
+                class="bi bi-grid-3x3-gap-fill me-1 d-none d-xl-inline-block"
+              ></i> {% endcomment %}
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid-3x3-gap-fill me-1 d-none d-xl-inline-block" viewBox="0 0 16 16">
+                <path d="M1 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zM1 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zM1 12a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1z"/>
+              </svg>
+              <span class="d-none d-xl-inline-block">{{ category }}</span>
+            </a>
+  
+            <ul
+              class="dropdown-menu z-index-unset"
+              aria-labelledby="categoryMenu"
+            >
+              {% for part in parts %}
+              <li><a class="dropdown-item" href="{{ part.get_absolute_url }}">{{ part.name }}</a></li>
+              {% endfor %}
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <a
+                  class="dropdown-item bg-primary text-primary bg-opacity-10 rounded-2 mb-0"
+                  href="parts/"
+                  >{{ viewa }}</a
+                >
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <!-- Category menu END -->
+  
+        <!-- Main navbar START -->
+        <div class="navbar-collapse collapse" id="navbarCollapse">
+          <!-- Nav Search START -->
+          <div class="col-xl-8">
+            <div class="nav my-3 my-xl-0 px-4 flex-nowrap align-items-center">
+              <div class="nav-item w-100">
+                <form class="rounded position-relative" method="get" action="/full_search/">
+                  <input
+                    class="form-control pe-5 bg-secondary bg-opacity-10 border-0"
+                    type="search"
+                    name="quer"
+                    placeholder="{{ search }}"
+                    aria-label="Search"
+                  />
+                  <button
+                    class="btn btn-link bg-transparent px-2 py-0 position-absolute top-50 end-0 translate-middle-y"
+                    type="submit"
+                  >
+                    <i class="fas fa-search fs-6 text-primary"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- Nav Search END -->
+        </div>
+        <!-- Main navbar END -->
+  
+        <!-- Right header content START -->
+        <!-- Add to cart -->
+        <div class="navbar-nav position-relative overflow-visible me-3">
+          <a href="/cart/" class="nav-link">
+            <i class="fas fa-shopping-cart fs-5"></i
+          ></a>
+          <span
+            class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-success mt-xl-2 ms-n1"
+            >
+            {% with total_items=cart|length %} {% if total_items > 0 %}
+            {{ total_items }}
+            {% elif not order %}
+            0
+            {% endif %} {% endwith %}
+            <span class="visually-hidden">unread messages</span>
+          </span>
+        </div>
+  
+        <!-- Language -->
+        <ul class="navbar-nav navbar-nav-scroll me-3 d-none d-xl-block">
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="language"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <i class="fas fa-globe me-2"></i>
+              <span class="d-none d-lg-inline-block">{{ language }}</span>
+            </a>
+            <ul
+              class="dropdown-menu dropdown-menu-end min-w-auto"
+              aria-labelledby="language"
+            >
+              <li>
+                <a class="dropdown-item" href="/en/"
+                  ><img
+                    class="fa-fw me-2"
+                    src="https://m.sprashivalka.com/user_media/1ac/c41/2f3/b9640.jpg"
+                    alt=""
+                  />English</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="/uz/"
+                  ><img
+                    class="fa-fw me-2"
+                    src="https://savol-javoblar.darakchi.net/uploads/posts/2023-11/ozbekiston-bayrogi-bolalar-uchun-sher-1.jpg"
+                    alt=""
+                  />O'zbek</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="/ru/"
+                  ><img
+                    class="fa-fw me-2"
+                    src="https://ggym.ru/wp-content/uploads/2021/10/flag-russia-XL.jpg"
+                    alt=""
+                  />Русский</a
+                >
+              </li>
+            </ul>
+          </li>
+        </ul>
+  
+        <!-- Signout button  -->
+        {% if request.user.is_authenticated %}
+        <div class="dropdown ms-1 ms-lg-0">
+          <a
+            class="avatar avatar-sm p-0"
+            href="#"
+            id="profileDropdown"
+            role="button"
+            data-bs-auto-close="outside"
+            data-bs-display="static"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          > 
+            {% if request.user.avatar %}
+            <img
+              class="avatar-img rounded-circle"
+              src="{{request.user.avatar.url}}"
+              alt="avatar"
+            />
+            {% else %}
+            <img
+              class="avatar-img rounded-circle"
+              src="https://www.imagensempng.com.br/wp-content/uploads/2021/08/Icone-usuario-Png.png"
+              alt="avatar"
+            />
+            {% endif %}
+          </a>
+          <ul
+            class="dropdown-menu dropdown-animation dropdown-menu-end shadow pt-3"
+            aria-labelledby="profileDropdown"
+          >
+            <!-- Profile info -->
+            <li class="px-3 mb-3">
+              <div class="d-flex align-items-center">
+                <!-- Avatar -->
+                <div class="avatar me-3">
+                  {% if request.user.avatar %}
+                  <img
+                    class="avatar-img rounded-circle shadow"
+                    src="{{request.user.avatar.url}}"
+                    alt="avatar"
+                  />
+                  {% else %}
+                  <img
+                    class="avatar-img rounded-circle shadow"
+                    src="https://www.imagensempng.com.br/wp-content/uploads/2021/08/Icone-usuario-Png.png"
+                    alt="avatar"
+                  />
+                  {% endif %}
+                </div>
+                <div>
+                  <a class="h6" href="{% url "account" request.user.id %}">{{request.user.username}}</a>
+                  <p class="small m-0">{{request.user.email}}</p>
+                </div>
+              </div>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <!-- Links -->
+            <li>
+              <a class="dropdown-item" href="{% url "updateUser" request.user.pk %}"
+                ><i class="bi bi-person fa-fw me-2"></i>{{ edit }}</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="#"
+                ><i class="bi bi-gear fa-fw me-2"></i>{{ set }}</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="#"
+                ><i class="bi bi-info-circle fa-fw me-2"></i>{{ help }}</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item bg-danger-soft-hover" href="logout/"
+                ><i class="bi bi-power fa-fw me-2"></i>{{ sign_out }}</a
+              >
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <!-- Dark mode options START -->
+            <li>
+              <div
+                class="bg-light dark-mode-switch theme-icon-active d-flex align-items-center p-1 rounded mt-2"
+              >
+                <button
+                  type="button"
+                  class="btn btn-sm mb-0"
+                  data-bs-theme-value="light"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-sun fa-fw mode-switch"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"
+                    />
+                    <use href="#"></use>
+                  </svg>
+                  {{ light }}
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm mb-0"
+                  data-bs-theme-value="dark"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-moon-stars fa-fw mode-switch"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM4.858 1.311A7.269 7.269 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.316 7.316 0 0 0 5.205-2.162c-.337.042-.68.063-1.029.063-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286z"
+                    />
+                    <path
+                      d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"
+                    />
+                    <use href="#"></use>
+                  </svg>
+                  {{ dark }}
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm mb-0 active"
+                  data-bs-theme-value="auto"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-circle-half fa-fw mode-switch"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"
+                    />
+                    <use href="#"></use>
+                  </svg>
+                  {{ auto }}
+                </button>
+              </div>
+            </li>
+            <!-- Dark mode options END-->
+          </ul>
+        </div>
+        {% else %}
+        <div class="navbar-nav d-none d-lg-inline-block">
+          <a href="register/">
+            <button class="btn btn-danger-soft mb-0">
+              <i class="fas fa-sign-in-alt me-2"></i>Sign Up
+            </button>
+          </a>
+        </div>
+        {% endif %}
+        <!-- Right header content END -->
+      </div>
+    </nav>
+    <!-- Logo Nav END -->
+  </header>
+<main>
+  <!-- =======================
+Page Banner START -->
+  <section class="pt-0">
+    <div class="container-fluid px-0">
+      <div
+        class="card bg-blue h-100px h-md-200px rounded-0"
+        style="
+          background: url(assets/images/pattern/04.png) no-repeat center center;
+          background-size: cover;
+        "
+      ></div>
+    </div>
+    <div class="container mt-n4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card bg-transparent card-body pb-0 px-0 mt-2 mt-sm-0">
+            <div class="row d-sm-flex justify-sm-content-between mt-2 mt-md-0">
+              <!-- Avatar -->
+              <div class="col-auto">
+                <div class="avatar avatar-xxl position-relative mt-n3">
+                  <img
+                    class="avatar-img rounded-circle border border-white border-3 shadow"
+                    src="assets/images/avatar/09.jpg"
+                    alt=""
+                  />
+                  <span
+                    class="badge text-bg-success rounded-pill position-absolute top-50 start-100 translate-middle mt-4 mt-md-5 ms-n3 px-md-3"
+                    >Pro</span
+                  >
+                </div>
+              </div>
+              <!-- Profile info -->
+              <div
+                class="col d-sm-flex justify-content-between align-items-center"
+              >
+                <div>
+                  <h1 class="my-1 fs-4">Lori Stevens</h1>
+                  <ul class="list-inline mb-0">
+                    <li class="list-inline-item me-3 mb-1 mb-sm-0">
+                      <span class="h6">255</span>
+                      <span class="text-body fw-light">points</span>
+                    </li>
+                    <li class="list-inline-item me-3 mb-1 mb-sm-0">
+                      <span class="h6">7</span>
+                      <span class="text-body fw-light">Completed courses</span>
+                    </li>
+                    <li class="list-inline-item me-3 mb-1 mb-sm-0">
+                      <span class="h6">52</span>
+                      <span class="text-body fw-light">Completed lessons</span>
+                    </li>
+                  </ul>
+                </div>
+                <!-- Button -->
+                <div class="mt-2 mt-sm-0">
+                  <a
+                    href="{% url "user_courses" user.id %}"
+                    class="btn btn-outline-primary mb-0"
+                    >View my courses</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Advanced filter responsive toggler START -->
+          <!-- Divider -->
+          <hr class="d-xl-none" />
+          <div
+            class="col-12 col-xl-3 d-flex justify-content-between align-items-center"
+          >
+            <a class="h6 mb-0 fw-bold d-xl-none" href="#">Menu</a>
+            <button
+              class="btn btn-primary d-xl-none"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasSidebar"
+              aria-controls="offcanvasSidebar"
+            >
+              <i class="fas fa-sliders-h"></i>
+            </button>
+          </div>
+          <!-- Advanced filter responsive toggler END -->
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- =======================
+Page Banner END -->
+
+  <!-- =======================
+Page content START -->
+  <section class="pt-0">
+    <div class="container">
+      <div class="row">
+        <!-- Left sidebar START -->
+        <div class="col-xl-3">
+          <!-- Responsive offcanvas body START -->
+          <div
+            class="offcanvas-xl offcanvas-end"
+            tabindex="-1"
+            id="offcanvasSidebar"
+          >
+            <!-- Offcanvas header -->
+            <div class="offcanvas-header bg-light">
+              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
+                My profile
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="offcanvas"
+                data-bs-target="#offcanvasSidebar"
+                aria-label="Close"
+              ></button>
+            </div>
+            <!-- Offcanvas body -->
+            <div class="offcanvas-body p-3 p-xl-0">
+              <div class="bg-dark border rounded-3 p-3 w-100">
+                <!-- Dashboard menu -->
+                <div
+                  class="list-group list-group-dark list-group-borderless collapse-list"
+                >
+                  <a class="list-group-item" href="  {% url "account" user.id %}"
+                    ><i class="bi bi-ui-checks-grid fa-fw me-2"></i>Dashboard</a
+                  >
+                  <a class="list-group-item" href="{% url "subscription" user.id %}"
+                    ><i class="bi bi-card-checklist fa-fw me-2"></i>My
+                    Subscriptions</a
+                  >
+                  <a class="list-group-item" href="{% url "user_courses" user.id %}"
+                    ><i class="bi bi-basket fa-fw me-2"></i>My Courses</a
+                  >
+                  <a class="list-group-item" href="{% url "resume" user.id %}"
+                    ><i class="far fa-fw fa-file-alt me-2"></i>Course Resume</a
+                  >
+                  <a class="list-group-item" href="{% url "payment_info" user.id %}"
+                    ><i class="bi bi-credit-card-2-front fa-fw me-2"></i>Payment
+                    Info</a
+                  >
+                  <a class="list-group-item active" href="{% url "wishlist" user.id %}"
+                    ><i class="bi bi-cart-check fa-fw me-2"></i>Wishlist</a
+                  >
+                  <a class="list-group-item" href="{% url "updateUser" request.user.id %}"
+                    ><i class="bi bi-pencil-square fa-fw me-2"></i>Edit
+                    Profile</a
+                  >
+                  <a
+                    class="list-group-item"
+                    href="instructor-delete-account.html"
+                    ><i class="bi bi-trash fa-fw me-2"></i>Delete Profile</a
+                  >
+                  <a
+                    class="list-group-item text-danger bg-danger-soft-hover"
+                    href="#"
+                    ><i class="fas fa-sign-out-alt fa-fw me-2"></i>Sign Out</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Responsive offcanvas body END -->
+        </div>
+        <!-- Left sidebar END -->
+
+        <!-- Main content START -->
+        <div class="col-xl-9">
+          <div class="card bg-transparent border rounded-3">
+            <!-- Card header START -->
+            <div class="card-header bg-transparent border-bottom">
+              <h3 class="mb-0">WishList</h3>
+            </div>
+            <!-- Card header END -->
+
+            <!-- Card body START -->
+            <div class="card-body p-3 p-md-4">
+              <div class="row g-4">
+
+                <div class="col-sm-6 col-lg-4">
+                  <div class="card shadow h-100">
+                    <!-- Image -->
+                    <img
+                      src="assets/images/courses/4by3/02.jpg"
+                      class="card-img-top"
+                      alt="course image"
+                    />
+                    <div class="card-body pb-0">
+                      <!-- Badge and favorite -->
+                      <div class="d-flex justify-content-between mb-2">
+                        <a
+                          href="#"
+                          class="badge bg-success bg-opacity-10 text-success"
+                          >Beginner</a
+                        >
+                        <a href="#" class="text-danger"
+                          ><i class="fas fa-heart"></i
+                        ></a>
+                      </div>
+                      <!-- Title -->
+                      <h5 class="card-title fw-normal">
+                        <a href="#">Graphic Design Masterclass</a>
+                      </h5>
+                      <p class="mb-2 text-truncate-2">
+                        Rooms oh fully taken by worse do Points afraid but may
+                        end Rooms Points afraid but may end Rooms
+                      </p>
+                      <!-- Rating star -->
+                      <ul class="list-inline mb-0">
+                        <li class="list-inline-item me-0 small">
+                          <i class="fas fa-star text-warning"></i>
+                        </li>
+                        <li class="list-inline-item me-0 small">
+                          <i class="fas fa-star text-warning"></i>
+                        </li>
+                        <li class="list-inline-item me-0 small">
+                          <i class="fas fa-star text-warning"></i>
+                        </li>
+                        <li class="list-inline-item me-0 small">
+                          <i class="fas fa-star text-warning"></i>
+                        </li>
+                        <li class="list-inline-item me-0 small">
+                          <i class="fas fa-star-half-alt text-warning"></i>
+                        </li>
+                        <li class="list-inline-item ms-2 h6 fw-light mb-0">
+                          4.5/5.0
+                        </li>
+                      </ul>
+                    </div>
+                    <!-- Card footer -->
+                    <div class="card-footer pt-0 pb-3">
+                      <hr />
+                      <div class="d-flex justify-content-between">
+                        <span class="h6 fw-light mb-0"
+                          ><i class="far fa-clock text-danger me-2"></i>9h
+                          56m</span
+                        >
+                        <span class="h6 fw-light mb-0"
+                          ><i class="fas fa-table text-orange me-2"></i>65
+                          lectures</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Card body EMD -->
+          </div>
+        </div>
+        <!-- Main content END -->
+      </div>
+      <!-- Row END -->
+    </div>
+  </section>
+  <!-- =======================
+Page content END -->
+</main>
+<!-- **************** MAIN CONTENT END **************** -->
+
+<!-- =======================
+Footer START -->
+<footer class="bg-dark p-3">
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Widget -->
+      <div class="col-md-4 text-center text-md-start mb-3 mb-md-0">
+        <!-- Logo START -->
+        <a href="index.html">
+          <img class="h-20px" src="assets/images/logo-light.svg" alt="logo" />
+        </a>
+      </div>
+
+      <!-- Widget -->
+      <div class="col-md-4 mb-3 mb-md-0">
+        <div class="text-center text-white text-primary-hover">
+          Copyrights ©2023 Eduport. Build by
+          <a
+            href="https://www.webestica.com/"
+            target="_blank"
+            class="text-white"
+            >Webestica</a
+          >.
+        </div>
+      </div>
+      <!-- Widget -->
+      <div class="col-md-4">
+        <!-- Rating -->
+        <ul class="list-inline mb-0 text-center text-md-end">
+          <li class="list-inline-item ms-2">
+            <a href="#"><i class="text-white fab fa-facebook"></i></a>
+          </li>
+          <li class="list-inline-item ms-2">
+            <a href="#"><i class="text-white fab fa-instagram"></i></a>
+          </li>
+          <li class="list-inline-item ms-2">
+            <a href="#"><i class="text-white fab fa-linkedin-in"></i></a>
+          </li>
+          <li class="list-inline-item ms-2">
+            <a href="#"><i class="text-white fab fa-twitter"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- =======================
+Footer END -->
+
+<!-- Back to top -->
+<div class="back-top">
+  <i
+    class="bi bi-arrow-up-short position-absolute top-50 start-50 translate-middle"
+  ></i>
+</div>
+
+{% endblock %}

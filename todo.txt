@@ -1,0 +1,7 @@
+1. Cart frontent
+2. Detail 
+4. Check responsive
+5. User profile
+6. Translate
+8. Edit/create course
+9. Course status
